@@ -31,7 +31,7 @@ function operate(){
         case '+':
             value = add(bO, aO);
             break;
-        case '/':
+        case '÷':
             if(aO === 0) {  alert('CANNOT DIVIDE BY 0'); clearScreen(); return}
             value = divide(bO, aO);
             break;

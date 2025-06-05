@@ -67,6 +67,9 @@ body, html {
     color: white;
     font-size: 24px;
 }
+.bt:hover{
+    filter: brightness(85%);
+}
 .button-row-1, .button-row-2, .button-row-3, .button-row-4, .button-row-5{
     display: flex;
     width: 100%;
