@@ -32,6 +32,7 @@ function operate(){
             value = add(bO, aO);
             break;
         case '/':
+            if(aO === 0) {  alert('CANNOT DIVIDE BY 0'); clearScreen(); return}
             value = divide(bO, aO);
             break;
         case 'x':
@@ -41,11 +42,23 @@ function operate(){
             value = mod(bO, aO);
             break;
     }
+    document.querySelector('#calculations').value = `${b} ${operator} ${a}`
+    const length = value.toString().length;
+    if(length > 12){
+        value = value.toExponential(2);   
+    }
+
+    if(typeof value === 'string' && value.includes('e')){
+    const numValue = parseFloat(value);
+    if(numValue.toString().length <= 12){
+        value = numValue;
+    }
+}
     a = value;
     operator = '';
     b = '';
     console.log('did calculations: ' + value);
-    
+    screen = a + operator + b
     document.querySelector('#screen').value = `${value}`
 
 
@@ -54,24 +67,36 @@ function operate(){
 let a = ''
 let operator = '';
 let b = '';
-let length = document.querySelector('#screen').value.length;
 function appendNumber(num){
-    if(a.length > 10) return;
-    console.log("Length: " + length);
+    if(a.length > 12) return;
+    if(a === '' && num === '.') a+='0';
     a += num;
-    document.querySelector('#screen').value = `${b} ${operator} ${a}`;
+    document.querySelector('#screen').value = `${a}`;
+
 }
 
 function deleteNumber(){ 
+    if(operator === ''){
+        if(a === '') return;
     a = a.slice(0, -1);
     console.log("text after pop: " + a);
     document.querySelector('#screen').value = a;
+    }
+    else{
+        operator = '';
+        a = b;
+        b = '';
+        document.querySelector('#screen').value = a;
+    }
+    
 }
 function clearScreen(){
     a = '';
     operator = '';
     b = '';
+    // screen = '';
     document.querySelector('#screen').value = '';
+    document.querySelector('#calculations').value = '';
 }
 
 function appendOperator(aOperator){
@@ -92,5 +117,8 @@ function appendOperator(aOperator){
     console.log('b: ' + b);
     a = '';
     console.log('a: ' + a);
-    document.querySelector('#screen').value = `${b} ${operator}`;
+    // screen = a + operator + b
+    // console.log("screen: " + screen);
+    document.querySelector('#calculations').value = `${b} ${operator}`
+    document.querySelector('#screen').value = '';
 }
